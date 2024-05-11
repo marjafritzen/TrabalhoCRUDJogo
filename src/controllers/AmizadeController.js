@@ -1,6 +1,8 @@
-const Amizade = require("../models/amizade")
-const AmizadeDAO = require('../models/dao/AmizadeDAO');
+// AmizadeController.js
+
+const Amizade = require("../models/amizade");
 const JogadoresDAO = require('../models/dao/JogadoresDAO');
+const AmizadeDAO = require('../models/dao/AmizadeDAO');
 
 class AmizadeController {
   // Cria uma nova amizade (CREATE)
@@ -20,12 +22,24 @@ class AmizadeController {
     } else {
       res.status(404).json({ message: "Jogador não encontrado" });
     }
-  }
+}
 
   // Lista todas as amizades (READ)
-  list(req, res) {
-    const listaAmizades = AmizadeDAO.listar();
-    res.status(200).json({ amizades: listaAmizades });
+  async list(req, res) {
+    try {
+      const listaAmizades = await AmizadeDAO.listar();
+      const amizadesComJogadores = await Promise.all(listaAmizades.map(async amizade => {
+        const amigosComInfo = await Promise.all(amizade.amigos.map(async amigoId => {
+          const jogador = await JogadoresDAO.buscarPorId(amigoId);
+          return { id: amigoId, nickname: jogador ? jogador.nickName : 'Jogador não encontrado' };
+        }));
+        return { id: amizade.id, amigos: amigosComInfo };
+      }));
+      res.status(200).json({ amizades: amizadesComJogadores });
+    } catch (error) {
+      console.error("Erro ao listar as amizades:", error);
+      res.status(500).json({ message: "Erro interno do servidor ao listar as amizades" });
+    }
   }
 
   // Mostra uma amizade específica (READ)
