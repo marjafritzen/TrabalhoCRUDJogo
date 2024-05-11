@@ -30,12 +30,21 @@ class PartidaDAO {
     // Atribui um ID à partida antes de adicioná-la à lista de partidas
     partida.idPartida = partidas.length + 1;
     partidas.push(partida);
-    return partida.idPartida; // Retorna o ID da partida criada
+    // Retorna um objeto com o ID da partida criada
+    return { idPartida: partida.idPartida };
   }
 
   // Método para listar todas as partidas
   listar() {
-    return partidas; // Retorna a lista completa de partidas
+    // Mapeia cada partida para incluir o ID da partida
+    return partidas.map(partida => {
+      return {
+        idPartida: partida.idPartida,
+        timeVencedor: partida.timeVencedor,
+        timePerdedor: partida.timePerdedor,
+        mvp: partida.mvp
+      };
+    });
   }
 
   // Método para buscar uma partida pelo ID

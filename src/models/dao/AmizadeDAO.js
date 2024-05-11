@@ -1,4 +1,5 @@
 const Amizade = require("../amizade");
+const JogadoresDAO = require('../dao/JogadoresDAO');
 
 let amizades = [
     new Amizade({ id: 1, amigos: [1, 2] }),
@@ -29,7 +30,16 @@ class AmizadeDAO {
     }
 
     buscarPorId(id) {
-        return amizades.find(amizade => amizade.id === id);
+        const amizade = amizades.find(amizade => amizade.id === id);
+        if (amizade) {
+            const amigosComNicknames = amizade.amigos.map(id => {
+                const jogador = JogadoresDAO.buscarPorId(id);
+                return jogador ? { id: id, nickname: jogador.nickName } : null;
+            });
+            return { id: amizade.id, amigos: amigosComNicknames };
+        } else {
+            return null;
+        }
     }
 
     exist(id) {

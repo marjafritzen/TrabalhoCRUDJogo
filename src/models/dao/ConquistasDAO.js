@@ -22,7 +22,7 @@ let conquistas = [
   new Conquista({ id: 18, nome: "Caçador de Cabeças", descricao: "Faça 100 eliminações com headshot" }),
   new Conquista({ id: 19, nome: "Assassino Silencioso", descricao: "Faça 100 eliminações com armas silenciosas" }),
   new Conquista({ id: 20, nome: "Mestre das Emboscadas", descricao: "Elimine 50 inimigos pelas costas" })
-];
+  ];
 
 class ConquistasDAO {
   // Retorna a lista de conquistas
