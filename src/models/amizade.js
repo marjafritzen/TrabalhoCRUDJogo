@@ -1,6 +1,15 @@
 class Amizade {
-  constructor({ amigos }) {
-    this.amigos = amigos ? amigos : [];
+  constructor({ id, amigos }) {
+      this.id = id;
+      this.amigos = amigos ? amigos : [];
+  }
+
+  verbose() {
+      const amigosComNicknames = this.amigos.map(amigo => {
+          const jogador = JogadoresDAO.buscarPorId(amigo.id);
+          return jogador ? { id: amigo.id, nickname: jogador.nickName } : null;
+      });
+      return { id: this.id, amigos: amigosComNicknames };
   }
 }
 

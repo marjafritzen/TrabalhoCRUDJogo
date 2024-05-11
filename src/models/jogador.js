@@ -42,4 +42,4 @@ class Jogador {
 
 
 
-module.exports = Jogador
+module.exports = Jogador;
