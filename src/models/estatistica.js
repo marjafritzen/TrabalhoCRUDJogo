@@ -8,11 +8,6 @@ class Estatisticas {
   }
 
   calculaEstatisticas() {
-    //Calcula a quantidade de jogos jogados
-    this.jogosJogados = this.jogosPerdidos + this.jogosVencidos
-  }
-
-  calculaEstatisticas() {
     // Calcula a quantidade de jogos jogados
     this.jogosJogados = this.jogosPerdidos + this.jogosVencidos;
 
